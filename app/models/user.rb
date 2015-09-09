@@ -4,10 +4,10 @@ class User < ActiveRecord::Base
 
   def tweet_user
     $twitter = Twitter::REST::Client.new do |config|
-      config.consumer_key = API_KEY["TWITTER_CONSUMER_KEY"]
-      config.consumer_secret = API_KEY["TWITTER_CONSUMER_SECRET"]
-      config.access_token = self.token
-      config.access_token_secret = self.token_secret
+      config.consumer_key = ENV['API_Key']
+      config.consumer_secret = ENV['API_Secret']
+      config.access_token = ENV['Access_Token']
+      config.access_token_secret = ENV['Access_Token_Secret']
     end
      $twitter
   end
