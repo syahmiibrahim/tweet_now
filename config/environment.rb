@@ -26,6 +26,9 @@ require 'byebug'
 
 require 'yaml'
 
+require 'omniauth'
+require 'omniauth-twitter'
+
 # Some helper constants for path-centric logic
 APP_ROOT = Pathname.new(File.expand_path('../../', __FILE__))
 
@@ -42,9 +45,6 @@ require APP_ROOT.join('config', 'database')
 
 API_KEY = YAML::load_file(File.join(__dir__,'secret.yaml'))
 
-$twitter = Twitter::REST::Client.new do |config|
-  config.consumer_key = API_KEY["TWITTER_CONSUMER_KEY"]
-  config.consumer_secret = API_KEY["TWITTER_CONSUMER_SECRET"]
-  config.access_token = API_KEY["TWITTER_ACCESS_TOKEN"]
-  config.access_token_secret = API_KEY["TWITTER_ACCESS_TOKEN_SECRET"]
+use OmniAuth::Builder do 
+  provider :twitter, API_KEY["TWITTER_CONSUMER_KEY"], API_KEY["TWITTER_CONSUMER_SECRET"]
 end

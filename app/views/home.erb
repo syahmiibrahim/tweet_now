@@ -1,0 +1,11 @@
+<div class="container">
+	<h1>Welcome <%= @user.tweethandle %>!</h1>
+	<a href="/logout"><button>Logout</button></a>
+  <hr>
+  <b>Update your status!</b>
+  <form id="update-tweet" action="/tweet/update" method="get">
+  <input id="update-text" type="text" name="update">
+  <input id="update-submit" type="submit" value="post it!">
+  </form>
+  <div id="status"></div>
+</div>
