@@ -46,5 +46,5 @@ require APP_ROOT.join('config', 'database')
 # API_KEY = YAML::load_file(File.join(__dir__,'secret.yaml'))
 
 use OmniAuth::Builder do 
-  provider :twitter, ENV['TWITTE_KEY'], ENV['TWITTER_SECRET']
+  provider :twitter, ENV['TWITTER_KEY'], ENV['TWITTER_SECRET']
 end
