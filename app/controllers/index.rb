@@ -13,6 +13,7 @@ get '/' do
 end
 
 get '/login' do
+  session[:user] = true
   redirect to "/auth/twitter"
 end
 
@@ -40,9 +41,9 @@ end
 
 get '/tweet/update' do
   @user = User.find_by_tweethandle(session[:username])
-  @tweet = @user.tweet_user
-  @tweet.update(params[:update])
-  erb :home
+  #@tweet = @user.tweet_user
+  job_id = @user.update_tweet(params[:update])
+  # erb :home
 end
 
 get '/logout' do
@@ -51,7 +52,11 @@ get '/logout' do
   redirect to '/'
 end
 
+get '/status/:job_id' do
+  @job_id = params[:job_id]
+  job_is_complete(params[:job_id].to_s)
 
+end
 # get '/private' do
 #   halt(401,'Not Authorized') unless user?
 #   "This is the private page - members only"

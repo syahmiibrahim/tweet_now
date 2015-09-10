@@ -29,6 +29,9 @@ require 'yaml'
 require 'omniauth'
 require 'omniauth-twitter'
 
+require 'sidekiq'
+require 'redis'
+
 # Some helper constants for path-centric logic
 APP_ROOT = Pathname.new(File.expand_path('../../', __FILE__))
 
@@ -37,14 +40,17 @@ APP_NAME = APP_ROOT.basename.to_s
 # Set up the controllers and helpers
 Dir[APP_ROOT.join('app', 'controllers', '*.rb')].each { |file| require file }
 Dir[APP_ROOT.join('app', 'helpers', '*.rb')].each { |file| require file }
+Dir[APP_ROOT.join('app', 'workers', '*.rb')].each { |file| require file }
 
 # Set up the database and models
 require APP_ROOT.join('config', 'database')
 
 # Set up the Twitter API
 
-# API_KEY = YAML::load_file(File.join(__dir__,'secret.yaml'))
+API_KEY = YAML::load_file(File.join(__dir__,'secret.yaml'))
 
 use OmniAuth::Builder do 
-  provider :twitter, ENV['TWITTER_KEY'], ENV['TWITTER_SECRET']
+  provider :twitter, API_KEY["TWITTER_CONSUMER_KEY"], API_KEY["TWITTER_CONSUMER_SECRET"]
 end
+
+#ENV['TWITTER_KEY'], #ENV['TWITTER_SECRET']
